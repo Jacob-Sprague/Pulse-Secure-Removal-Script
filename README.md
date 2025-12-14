@@ -28,10 +28,10 @@ registry entries. After 4 versions, it is able to be run back to back without er
 
 ```powershell
 # Interactive mode
-.\PulseSecureUninstall.ps1
+.\pulseRemove.ps1
 
 # Silent mode (for remote/unattended deployment)
-.\PulseSecureUninstall.ps1 -Silent
+.\pulseRemove.ps1 -Silent
 ```
 
 ## How It Works
