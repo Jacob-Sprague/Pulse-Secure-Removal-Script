@@ -9,8 +9,8 @@ The standard Pulse Secure uninstaller often leaves behind residual files, regist
 ## Development Process
 
 This script was developed iteratively to solve a real enterprise deployment 
-challenge. Initial versions of this script were tested and refined based on failures 
-encountered across 30+ production workstations, with each version addressing 
+challenge. Initial versions of this script were tested and refined based on errors 
+encountered across 50+ production workstations, with each version addressing 
 specific edge cases like ActiveX controls, hung uninstallers, and orphaned 
 registry entries. After 4 versions, it is able to be run back to back without error, successfully removing Pulse Secure on each run.
 
