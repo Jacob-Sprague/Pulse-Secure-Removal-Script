@@ -6,6 +6,14 @@ A comprehensive PowerShell script to fully remove Pulse Secure (now Ivanti Secur
 
 The standard Pulse Secure uninstaller often leaves behind residual files, registry entries, and per-user data. This script was developed to address incomplete uninstalls across enterprise environments where clean removal is required before deploying new VPN solutions.
 
+## Development Process
+
+This script was developed iteratively to solve a real enterprise deployment 
+challenge. Initial versions of this script were tested and refined based on failures 
+encountered across 30+ production workstations, with each version addressing 
+specific edge cases like ActiveX controls, hung uninstallers, and orphaned 
+registry entries. After 4 versions, it is able to be run back to back without error, successfully removing Pulse Secure on each run.
+
 ## Features
 
 - **Dynamic Uninstaller Detection** - Automatically locates PulseUninstall.exe on the system
