@@ -113,7 +113,7 @@ function Start-ProcessWithTimeout {
     return $result
 }
 
-function Load-RegistryHive {
+function Add-RegistryHive {
     param(
         [string]$KeyPath,
         [string]$HivePath
@@ -129,7 +129,7 @@ function Load-RegistryHive {
     }
 }
 
-function Unload-RegistryHive {
+function Remove-RegistryHive {
     param(
         [string]$KeyPath
     )
@@ -645,12 +645,12 @@ $allUserProfiles = Get-ChildItem $profileListPath -ErrorAction SilentlyContinue 
 
 Write-Host "Found $($allUserProfiles.Count) user profile(s) to check.`n"
 
-foreach ($profile in $allUserProfiles) {
-    $sidValue = $profile.PSChildName
+foreach ($p in $allUserProfiles) {
+    $sidValue = $p.PSChildName
     $hkuPath = "HKU:\$sidValue"
     $hiveLoaded = $false
     
-    $profileImagePath = (Get-ItemProperty -Path $profile.PSPath -ErrorAction SilentlyContinue).ProfileImagePath
+    $profileImagePath = (Get-ItemProperty -Path $p.PSPath -ErrorAction SilentlyContinue).ProfileImagePath
     $userName = Split-Path $profileImagePath -Leaf
     
     Write-Host "Checking user: $userName (SID: $sidValue)" -ForegroundColor Cyan
@@ -661,7 +661,7 @@ foreach ($profile in $allUserProfiles) {
         $ntUserDatPath = Join-Path $profileImagePath "NTUSER.DAT"
         
         if (Test-Path $ntUserDatPath) {
-            $hiveLoaded = Load-RegistryHive -KeyPath "HKU\$sidValue" -HivePath $ntUserDatPath
+            $hiveLoaded = Add-RegistryHive -KeyPath "HKU\$sidValue" -HivePath $ntUserDatPath
             
             if (-not $hiveLoaded) {
                 Write-Warning "  Could not load hive. Skipping this user."
@@ -692,7 +692,7 @@ foreach ($profile in $allUserProfiles) {
     
     if ($hiveLoaded) {
         Write-Host "  Unloading registry hive..." -ForegroundColor Gray
-        $unloadResult = Unload-RegistryHive -KeyPath "HKU\$sidValue"
+        $unloadResult = Remove-RegistryHive -KeyPath "HKU\$sidValue"
         
         if (-not $unloadResult) {
             Write-Warning "  Hive may remain loaded until next reboot."
@@ -1017,4 +1017,5 @@ if (-not $Silent) {
 
 #=============================================================================
 # END OF SCRIPT
+
 #=============================================================================
