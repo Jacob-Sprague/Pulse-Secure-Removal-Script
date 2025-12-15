@@ -12,7 +12,16 @@ This script was developed iteratively to solve a real enterprise deployment
 challenge. Initial versions of this script were tested and refined based on errors 
 encountered across 50+ production workstations, with each version addressing 
 specific edge cases like ActiveX controls, hung uninstallers, and orphaned 
-registry entries. After 4 versions, it is able to be run back to back without error, successfully removing Pulse Secure on each run.
+registry entries. The script was designed to be idempotent, allowing it to be run multiple times safely without producing errors or partial state.
+
+## Security & Operational Context
+
+Incomplete VPN client removal can introduce operational risk in enterprise environments, including:
+- Conflicts with replacement VPN or zero-trust solutions
+- Residual services or drivers running with elevated privileges
+- Broken authentication flows tied to legacy components
+
+This script was designed to ensure clean endpoint state prior to deploying replacement access solutions.
 
 ## Features
 
